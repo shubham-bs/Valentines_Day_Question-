@@ -1,6 +1,7 @@
 // Elements
 const noSound = new Audio("NO.mp3");
 const moveSound = new Audio("Swoosh.mp3");
+const yesSound = new Audio("RTC111.mp4");
 const envelope = document.getElementById("envelope-container");
 const letter = document.getElementById("letter-container");
 const noBtn = document.querySelector(".no-btn");
@@ -161,6 +162,10 @@ noBtn.addEventListener("mouseenter", () => {
 // YES is clicked
 
 yesBtn.addEventListener("click", () => {
+
+    yesSound.currentTime = 0;
+    yesSound.play();
+    
     title.textContent = "Yippeeee!";
 
     catImg.src = "cat_dance.gif";
