@@ -38,30 +38,35 @@ envelope.addEventListener("click", () => {
 
 let moveCount = 0;
 
+// lock initial position once
+const startRect = noBtn.getBoundingClientRect();
+const startX = startRect.left;
+const startY = startRect.top;
+
 noBtn.addEventListener("mouseover", () => {
 
     if (moveCount >= 4) return;
     moveCount++;
 
-    const padding = 10; // keep a small gap from edges
+    // allowed movement from the locked position
+    const minX = startX - 100;  // left
+    const maxX = startX + 100;  // right
 
-    const btnRect = noBtn.getBoundingClientRect();
+    const minY = startY - 200;  // up
+    const maxY = startY + 50;   // down
 
-    const maxX = window.innerWidth - btnRect.width - padding;
-    const maxY = window.innerHeight - btnRect.height - padding;
+    const randomX = Math.random() * (maxX - minX) + minX;
+    const randomY = Math.random() * (maxY - minY) + minY;
 
-    const randomX = Math.random() * (maxX - padding) + padding;
-    const randomY = Math.random() * (maxY - padding) + padding;
+    const currentRect = noBtn.getBoundingClientRect();
 
-    const currentX = btnRect.left;
-    const currentY = btnRect.top;
-
-    const moveX = randomX - currentX;
-    const moveY = randomY - currentY;
+    const moveX = randomX - currentRect.left;
+    const moveY = randomY - currentRect.top;
 
     noBtn.style.transition = "transform 0.3s ease";
     noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
 });
+
 
 
 
