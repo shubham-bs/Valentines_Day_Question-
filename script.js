@@ -38,31 +38,32 @@ envelope.addEventListener("click", () => {
 
 let moveCount = 0;
 
-// lock initial position once
-const startRect = noBtn.getBoundingClientRect();
-const startX = startRect.left;
-const startY = startRect.top;
+const letterWindow = document.querySelector(".letter-window");
 
 noBtn.addEventListener("mouseenter", () => {
 
     if (moveCount >= 4) return;
     moveCount++;
 
-    const minX = startX - 100;  // left
-    const maxX = startX + 100;  // right
+    const letterRect = letterWindow.getBoundingClientRect();
+    const btnRect = noBtn.getBoundingClientRect();
 
-    const minY = startY - 200;  // up
-    const maxY = startY + 50;   // down
+    const padding = 15;
+
+    // allowed area inside the letter window
+    const minX = letterRect.left + padding;
+    const maxX = letterRect.right - btnRect.width - padding;
+
+    const minY = letterRect.top + padding;
+    const maxY = letterRect.bottom - btnRect.height - padding;
 
     const randomX = Math.random() * (maxX - minX) + minX;
     const randomY = Math.random() * (maxY - minY) + minY;
 
-    const currentRect = noBtn.getBoundingClientRect();
+    const moveX = randomX - btnRect.left;
+    const moveY = randomY - btnRect.top;
 
-    const moveX = randomX - currentRect.left;
-    const moveY = randomY - currentRect.top;
-
-    noBtn.style.transition = "transform 0.3s ease";
+    noBtn.style.transition = "transform 0.2s ease";
     noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
 });
 
