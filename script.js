@@ -102,7 +102,7 @@ noBtn.addEventListener("mouseenter", () => {
     const currentX = btnRect.left;
     const currentY = btnRect.top;
 
-    const maxJump = 160;
+    const maxJump = 110;
 
     let randomX = currentX + (Math.random() * 2 - 1) * maxJump;
     let randomY = currentY + (Math.random() * 2 - 1) * maxJump;
