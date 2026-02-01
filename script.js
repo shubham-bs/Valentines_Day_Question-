@@ -66,8 +66,8 @@ noBtn.addEventListener("mouseenter", () => {
     let randomY = currentY + (Math.random() * 2 - 1) * maxJump;
 
 // clamp inside the letter window
-randomX = Math.min(Math.max(randomX, minX), maxX);
-randomY = Math.min(Math.max(randomY, minY), maxY);
+    randomX = Math.min(Math.max(randomX, minX), maxX);
+    randomY = Math.min(Math.max(randomY, minY), maxY);
 
 
     const moveX = randomX - btnRect.left;
