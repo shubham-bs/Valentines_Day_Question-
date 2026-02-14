@@ -141,7 +141,6 @@ function spawnMeme() {
 
         memeWidth = Math.min(window.innerWidth * 0.16, 320);
         meme.style.width = memeWidth + "px";
-        meme.style.transform = "rotate(-4deg)";
 
         finalLeft = padding;
         finalTop = padding + memeIndex * (memeWidth * 0.75 + 20);
@@ -152,7 +151,6 @@ function spawnMeme() {
 
         memeWidth = Math.min(window.innerWidth * 0.16, 320);
         meme.style.width = memeWidth + "px";
-        meme.style.transform = "rotate(4deg)";
 
         finalLeft = window.innerWidth - memeWidth - padding;
         finalTop = padding + (memeIndex - 4) * (memeWidth * 0.75 + 20);
@@ -163,8 +161,6 @@ function spawnMeme() {
 
         memeWidth = Math.min(window.innerWidth * 0.12, 220);
         meme.style.width = memeWidth + "px";
-        meme.style.transform =
-            "rotate(" + (Math.random() * 6 - 3) + "deg)";
 
         const topIndex = memeIndex - 8;
         const totalWidth = memeWidth * 3 + 30;
