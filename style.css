@@ -77,6 +77,12 @@ p {
     font-size: 40px;
 }
 
+.letter-window {
+    position: relative;
+    z-index: 10;
+}
+
+
 /* Cat */
 
 .cat {
@@ -142,7 +148,10 @@ display: inline-block;
     position: fixed;
     width: 220px;
     height: auto;
-    z-index: 9999;
+    z-index: 1;
+    pointer-events: none;
+}
+
     animation: popIn 0.3s ease;
     pointer-events: none;
 }
