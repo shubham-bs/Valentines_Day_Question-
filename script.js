@@ -68,35 +68,44 @@ function spawnMeme() {
     meme.src = memes[memeIndex];
     meme.classList.add("floating-meme");
 
+    const memeHeight = 200 * 0.75; // approx image ratio
+    const spacing = 15;
+
+    const maxPerColumn = Math.floor(
+        (window.innerHeight - 40) / (memeHeight + spacing)
+    );
+
+    const side = memeIndex % 2 === 0 ? "left" : "right";
+
+    let columnIndex;
+
+    if (side === "left") {
+        columnIndex = leftCount % maxPerColumn;
+        leftCount++;
+    } else {
+        columnIndex = rightCount % maxPerColumn;
+        rightCount++;
+    }
+
+    const finalTop = 20 + columnIndex * (memeHeight + spacing);
+
     // Random initial position
-    const randomX = Math.random() * (window.innerWidth - memeWidth);
-    const randomY = Math.random() * (window.innerHeight - 300);
+    const randomX = Math.random() * (window.innerWidth - 220);
+    const randomY = Math.random() * (window.innerHeight - memeHeight);
 
     meme.style.left = `${randomX}px`;
     meme.style.top = `${randomY}px`;
 
     document.body.appendChild(meme);
 
-    // Decide final side
-    const side = memeIndex % 2 === 0 ? "left" : "right";
-
-    let finalTop;
-
-    if (side === "left") {
-        finalTop = 20 + leftCount * (memeWidth * 0.75 + verticalSpacing);
-        leftCount++;
-    } else {
-        finalTop = 20 + rightCount * (memeWidth * 0.75 + verticalSpacing);
-        rightCount++;
-    }
-
-    // Animate to column after short delay
+    // Animate to final position
     setTimeout(() => {
 
         meme.style.top = `${finalTop}px`;
 
         if (side === "left") {
             meme.style.left = "20px";
+            meme.style.right = "";
         } else {
             meme.style.left = "";
             meme.style.right = "20px";
@@ -106,6 +115,7 @@ function spawnMeme() {
 
     memeIndex++;
 }
+
 
 // ===== NO BUTTON MOVE =====
 let moveCount = 0;
