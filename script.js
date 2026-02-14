@@ -63,39 +63,36 @@ function spawnMeme() {
     meme.src = memes[memeIndex];
     meme.classList.add("floating-meme");
 
-    const memeWidth = 180;
-    const memeHeight = 180;
     const padding = 20;
 
-    meme.style.width = memeWidth + "px";
-
-    // Random initial position
-    const randomX = Math.random() * (window.innerWidth - memeWidth);
-    const randomY = Math.random() * (window.innerHeight - memeHeight);
-
-    meme.style.left = `${randomX}px`;
-    meme.style.top = `${randomY}px`;
-
-    document.body.appendChild(meme);
-
+    let memeWidth;
     let finalLeft, finalTop;
 
     // LEFT COLUMN (0–3)
     if (memeIndex < 4) {
 
+        memeWidth = 220;
+        meme.style.width = memeWidth + "px";
+
         finalLeft = padding;
-        finalTop = padding + memeIndex * (memeHeight + 15);
+        finalTop = padding + memeIndex * (memeWidth * 0.75 + 20);
 
     }
     // RIGHT COLUMN (4–7)
     else if (memeIndex < 8) {
 
+        memeWidth = 220;
+        meme.style.width = memeWidth + "px";
+
         finalLeft = window.innerWidth - memeWidth - padding;
-        finalTop = padding + (memeIndex - 4) * (memeHeight + 15);
+        finalTop = padding + (memeIndex - 4) * (memeWidth * 0.75 + 20);
 
     }
     // TOP ROW (8–10)
     else {
+
+        memeWidth = 180;
+        meme.style.width = memeWidth + "px";
 
         const topIndex = memeIndex - 8;
         const totalWidth = memeWidth * 3 + 30;
@@ -106,7 +103,16 @@ function spawnMeme() {
 
     }
 
-    // Animate to final slot
+    // Random initial position
+    const randomX = Math.random() * (window.innerWidth - memeWidth);
+    const randomY = Math.random() * (window.innerHeight - 200);
+
+    meme.style.left = `${randomX}px`;
+    meme.style.top = `${randomY}px`;
+
+    document.body.appendChild(meme);
+
+    // Animate to final position
     setTimeout(() => {
         meme.style.left = `${finalLeft}px`;
         meme.style.top = `${finalTop}px`;
@@ -114,6 +120,7 @@ function spawnMeme() {
 
     memeIndex++;
 }
+
 
 
 let moveCount = 0;
