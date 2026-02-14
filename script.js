@@ -1,8 +1,10 @@
-// Elements
+// ===== SOUNDS =====
 const noSound = new Audio("NO.mp3");
 const moveSound = new Audio("Swoosh.mp3");
 const yesSound = new Audio("RTC111.m4a");
 yesSound.loop = true;
+
+// ===== MEMES =====
 const memes = [
     "as1.png",
     "as2.png",
@@ -20,135 +22,47 @@ const memes = [
 
 let memeIndex = 0;
 
+// ===== ELEMENTS =====
 const envelope = document.getElementById("envelope-container");
 const letter = document.getElementById("letter-container");
 const noBtn = document.querySelector(".no-btn");
 const yesBtn = document.querySelector(".btn[alt='Yes']");
+const letterWindow = document.querySelector(".letter-window");
 
 const title = document.getElementById("letter-title");
 const catImg = document.getElementById("letter-cat");
 const buttons = document.getElementById("letter-buttons");
 const finalText = document.getElementById("final-text");
 
-// Click Envelope
-
+// ===== OPEN ENVELOPE =====
 envelope.addEventListener("click", () => {
 
+    // unlock audio
     moveSound.muted = true;
     moveSound.play().then(() => {
         moveSound.pause();
         moveSound.currentTime = 0;
         moveSound.muted = false;
     });
-    
+
     envelope.style.display = "none";
     letter.style.display = "flex";
 
-    setTimeout( () => {
-        document.querySelector(".letter-window").classList.add("open");
-    },50);
+    setTimeout(() => {
+        letterWindow.classList.add("open");
+    }, 50);
 });
 
-// Logic to move the NO btn
+// ===== SPAWN MEME FUNCTION =====
+function spawnMeme() {
 
-/*noBtn.addEventListener("mouseover", () => {
-    const min = 200;
-    const max = 200;
-
-    const distance = Math.random() * (max - min) + min;
-    const angle = Math.random() * Math.PI * 2;
-
-    const moveX = Math.cos(angle) * distance;
-    const moveY = Math.sin(angle) * distance;
-
-    noBtn.style.transition = "transform 0.3s ease";
-    noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
-}); */
-
-/*
-let moveCount = 0;
-
-const letterWindow = document.querySelector(".letter-window");
-
-noBtn.addEventListener("mouseenter", () => {
-
-    if (moveCount >= 4) return;
-    moveCount++;
-
-    const letterRect = letterWindow.getBoundingClientRect();
-    const btnRect = noBtn.getBoundingClientRect();
-
-    const padding = 15;
-
-    // allowed area inside the letter window
-    const minX = letterRect.left + padding;
-    const maxX = letterRect.right - btnRect.width - padding;
-
-    const minY = letterRect.top + padding;
-    const maxY = letterRect.bottom - btnRect.height - padding;
-
-    const currentX = btnRect.left;
-    const currentY = btnRect.top;
-
-    const maxJump = 80; // how far it can jump in one move
-
-    let randomX = currentX + (Math.random() * 2 - 1) * maxJump;
-    let randomY = currentY + (Math.random() * 2 - 1) * maxJump;
-
-// clamp inside the letter window
-    randomX = Math.min(Math.max(randomX, minX), maxX);
-    randomY = Math.min(Math.max(randomY, minY), maxY);
-
-
-    const moveX = randomX - btnRect.left;
-    const moveY = randomY - btnRect.top;
-
-    noBtn.style.transition = "transform 0.2s ease";
-    noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
-});
-*/
-
-let moveCount = 0;
-
-const letterWindow = document.querySelector(".letter-window");
-
-noBtn.addEventListener("mouseenter", () => {
-
-    if (moveCount >= 4) return;
-    moveCount++;
-
-    moveSound.currentTime = 0;
-    moveSound.play();
-
-    // Spawn 10 memes across 4 moves
-if (moveCount === 1) {
-    spawnMeme();
-    spawnMeme();
-    spawnMeme();   // 3
-}
-else if (moveCount === 2) {
-    spawnMeme();
-    spawnMeme();
-    spawnMeme();   // 3
-}
-else if (moveCount === 3) {
-    spawnMeme();
-    spawnMeme();   // 2
-}
-else if (moveCount === 4) {
-    spawnMeme();
-    spawnMeme();   // 2
-}
-
-
-    // Spawn meme when NO moves
-if (memeIndex < memes.length) {
+    if (memeIndex >= memes.length) return;
 
     const meme = document.createElement("img");
     meme.src = memes[memeIndex];
     meme.classList.add("floating-meme");
 
-    const x = Math.random() * (window.innerWidth - 250);
+    const x = Math.random() * (window.innerWidth - 220);
     const y = Math.random() * (window.innerHeight - 300);
 
     meme.style.left = `${x}px`;
@@ -157,17 +71,42 @@ if (memeIndex < memes.length) {
     document.body.appendChild(meme);
 
     memeIndex++;
+}
+
+// ===== NO BUTTON MOVE =====
+let moveCount = 0;
+
+noBtn.addEventListener("mouseenter", () => {
+
+    if (moveCount >= 4) return;
+
+    moveCount++;
+
+    moveSound.currentTime = 0;
+    moveSound.play();
+
+    // 10 memes across 4 movements
+    if (moveCount === 1) {
+        spawnMeme(); spawnMeme(); spawnMeme(); // 3
+    }
+    else if (moveCount === 2) {
+        spawnMeme(); spawnMeme(); spawnMeme(); // 3
+    }
+    else if (moveCount === 3) {
+        spawnMeme(); spawnMeme(); // 2
+    }
+    else if (moveCount === 4) {
+        spawnMeme(); spawnMeme(); // 2
     }
 
-    
+    // Move logic
     const letterRect = letterWindow.getBoundingClientRect();
     const btnRect = noBtn.getBoundingClientRect();
 
-    const padding = 16; // keep some margin from edges
+    const padding = 16;
 
     const minX = letterRect.left + padding;
     const maxX = letterRect.right - btnRect.width - padding;
-
     const minY = letterRect.top + padding;
     const maxY = letterRect.bottom - btnRect.height - padding;
 
@@ -189,75 +128,46 @@ if (memeIndex < memes.length) {
     noBtn.style.transform = `translate(${moveX}px, ${moveY}px)`;
 });
 
+// ===== YES BUTTON GROW =====
+let yesScale = 1;
 
+yesBtn.style.position = "relative";
+yesBtn.style.transformOrigin = "center center";
+yesBtn.style.transition = "transform 0.3s ease";
 
+// ===== NO CLICK =====
+noBtn.addEventListener("click", () => {
 
-// Logic to make YES btn to grow
+    noSound.currentTime = 0;
+    noSound.play();
 
- let yesScale = 1;
+    yesScale += 2;
 
- yesBtn.style.position = "relative"
- yesBtn.style.transformOrigin = "center center";
- yesBtn.style.transition = "transform 0.3s ease";
+    if (yesBtn.style.position !== "fixed") {
+        yesBtn.style.position = "fixed";
+        yesBtn.style.top = "50%";
+        yesBtn.style.left = "50%";
+        yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
+    } else {
+        yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
+    }
 
- noBtn.addEventListener("click", () => {
-     
-     noSound.currentTime = 0;
-     noSound.play();
-     
-     yesScale += 2;
-
-     if (yesBtn.style.position !== "fixed") {
-         yesBtn.style.position = "fixed";
-         yesBtn.style.top = "50%";
-         yesBtn.style.left = "50%";
-         yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
-     }else{
-         yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
-     }
-
-     // Last 2 memes appear on click
-spawnMeme();
-
-
-    
- 
+    // Last 2 memes appear on click
+    spawnMeme();
 });
 
-// YES is clicked
-
+// ===== YES CLICKED =====
 yesBtn.addEventListener("click", () => {
 
     yesSound.currentTime = 0;
     yesSound.play();
-    
-    title.textContent = "Yippeeee!";
 
+    title.textContent = "Yippeeee!";
     catImg.src = "cat_dance.gif";
 
-    document.querySelector(".letter-window").classList.add("final");
+    letterWindow.classList.add("final");
 
     buttons.style.display = "none";
-
     finalText.style.display = "block";
 });
 
-
-function spawnMeme() {
-
-    if (memeIndex >= memes.length) return;
-
-    const meme = document.createElement("img");
-    meme.src = memes[memeIndex];
-    meme.classList.add("floating-meme");
-
-    const x = Math.random() * (window.innerWidth - 250);
-    const y = Math.random() * (window.innerHeight - 300);
-
-    meme.style.left = `${x}px`;
-    meme.style.top = `${y}px`;
-
-    document.body.appendChild(meme);
-
-    memeIndex++;
-}
