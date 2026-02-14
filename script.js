@@ -3,6 +3,23 @@ const noSound = new Audio("NO.mp3");
 const moveSound = new Audio("Swoosh.mp3");
 const yesSound = new Audio("RTC111.m4a");
 yesSound.loop = true;
+const memes = [
+    "as1.png",
+    "as2.png",
+    "as3.png",
+    "as4.png",
+    "as5.png",
+    "as6.png",
+    "as7.png",
+    "as8.png",
+    "as9.png",
+    "as10.png",
+    "as11.png",
+    "as12.png"
+];
+
+let memeIndex = 0;
+
 const envelope = document.getElementById("envelope-container");
 const letter = document.getElementById("letter-container");
 const noBtn = document.querySelector(".no-btn");
@@ -158,6 +175,24 @@ noBtn.addEventListener("mouseenter", () => {
      }else{
          yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
      }
+
+     if (memeIndex < memes.length) {
+
+    const meme = document.createElement("img");
+    meme.src = memes[memeIndex];
+    meme.classList.add("floating-meme");
+
+    const x = Math.random() * (window.innerWidth - 250);
+    const y = Math.random() * (window.innerHeight - 300);
+
+    meme.style.left = `${x}px`;
+    meme.style.top = `${y}px`;
+
+    document.body.appendChild(meme);
+
+    memeIndex++;
+    }
+ 
 });
 
 // YES is clicked
