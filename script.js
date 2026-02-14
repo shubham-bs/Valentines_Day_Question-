@@ -55,6 +55,7 @@ envelope.addEventListener("click", () => {
     }, 50);
 });
 
+/*
 function spawnMeme() {
 
     if (memeIndex >= memes.length) return;
@@ -113,6 +114,78 @@ function spawnMeme() {
     document.body.appendChild(meme);
 
     // Animate to final position
+    setTimeout(() => {
+        meme.style.left = `${finalLeft}px`;
+        meme.style.top = `${finalTop}px`;
+    }, 300);
+
+    memeIndex++;
+}
+*/
+
+function spawnMeme() {
+
+    if (memeIndex >= memes.length) return;
+
+    const meme = document.createElement("img");
+    meme.src = memes[memeIndex];
+    meme.classList.add("floating-meme");
+
+    const padding = 20;
+
+    let memeWidth;
+    let finalLeft, finalTop;
+
+    // === LEFT COLUMN (0–3) ===
+    if (memeIndex < 4) {
+
+        memeWidth = Math.min(window.innerWidth * 0.16, 320);
+        meme.style.width = memeWidth + "px";
+        meme.style.transform = "rotate(-4deg)";
+
+        finalLeft = padding;
+        finalTop = padding + memeIndex * (memeWidth * 0.75 + 20);
+    }
+
+    // === RIGHT COLUMN (4–7) ===
+    else if (memeIndex < 8) {
+
+        memeWidth = Math.min(window.innerWidth * 0.16, 320);
+        meme.style.width = memeWidth + "px";
+        meme.style.transform = "rotate(4deg)";
+
+        finalLeft = window.innerWidth - memeWidth - padding;
+        finalTop = padding + (memeIndex - 4) * (memeWidth * 0.75 + 20);
+    }
+
+    // === TOP ROW (8–10) ===
+    else {
+
+        memeWidth = Math.min(window.innerWidth * 0.12, 220);
+        meme.style.width = memeWidth + "px";
+        meme.style.transform =
+            "rotate(" + (Math.random() * 6 - 3) + "deg)";
+
+        const topIndex = memeIndex - 8;
+        const totalWidth = memeWidth * 3 + 30;
+        const startX = (window.innerWidth - totalWidth) / 2;
+
+        finalLeft = startX + topIndex * (memeWidth + 15);
+        finalTop = padding;
+    }
+
+    const memeHeight = memeWidth * 0.75;
+
+    // === RANDOM START POSITION ===
+    const randomX = Math.random() * (window.innerWidth - memeWidth);
+    const randomY = Math.random() * (window.innerHeight - memeHeight);
+
+    meme.style.left = `${randomX}px`;
+    meme.style.top = `${randomY}px`;
+
+    document.body.appendChild(meme);
+
+    // === ANIMATE TO FINAL POSITION ===
     setTimeout(() => {
         meme.style.left = `${finalLeft}px`;
         meme.style.top = `${finalTop}px`;
