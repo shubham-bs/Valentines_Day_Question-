@@ -120,6 +120,27 @@ noBtn.addEventListener("mouseenter", () => {
     moveSound.currentTime = 0;
     moveSound.play();
 
+    // Spawn 10 memes across 4 moves
+if (moveCount === 1) {
+    spawnMeme();
+    spawnMeme();
+    spawnMeme();   // 3
+}
+else if (moveCount === 2) {
+    spawnMeme();
+    spawnMeme();
+    spawnMeme();   // 3
+}
+else if (moveCount === 3) {
+    spawnMeme();
+    spawnMeme();   // 2
+}
+else if (moveCount === 4) {
+    spawnMeme();
+    spawnMeme();   // 2
+}
+
+
     // Spawn meme when NO moves
 if (memeIndex < memes.length) {
 
@@ -195,6 +216,10 @@ if (memeIndex < memes.length) {
          yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
      }
 
+     // Last 2 memes appear on click
+spawnMeme();
+
+
     
  
 });
@@ -216,3 +241,23 @@ yesBtn.addEventListener("click", () => {
 
     finalText.style.display = "block";
 });
+
+
+function spawnMeme() {
+
+    if (memeIndex >= memes.length) return;
+
+    const meme = document.createElement("img");
+    meme.src = memes[memeIndex];
+    meme.classList.add("floating-meme");
+
+    const x = Math.random() * (window.innerWidth - 250);
+    const y = Math.random() * (window.innerHeight - 300);
+
+    meme.style.left = `${x}px`;
+    meme.style.top = `${y}px`;
+
+    document.body.appendChild(meme);
+
+    memeIndex++;
+}
