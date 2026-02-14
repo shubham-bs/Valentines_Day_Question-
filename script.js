@@ -66,33 +66,37 @@ function spawnMeme() {
     const padding = 20;
 
     let memeWidth;
+    let memeHeight;
     let finalLeft, finalTop;
 
-    // LEFT COLUMN (0–3)
+    // LEFT COLUMN (0–3) → 308px
     if (memeIndex < 4) {
 
-        memeWidth = 220;
+        memeWidth = 308;
         meme.style.width = memeWidth + "px";
+        meme.style.transform = "rotate(-4deg)";
 
         finalLeft = padding;
-        finalTop = padding + memeIndex * (memeWidth * 0.75 + 20);
+        finalTop = padding + memeIndex * (memeWidth * 0.75 + 25);
 
     }
-    // RIGHT COLUMN (4–7)
+    // RIGHT COLUMN (4–7) → 308px
     else if (memeIndex < 8) {
 
-        memeWidth = 220;
+        memeWidth = 308;
         meme.style.width = memeWidth + "px";
+        meme.style.transform = "rotate(4deg)";
 
         finalLeft = window.innerWidth - memeWidth - padding;
-        finalTop = padding + (memeIndex - 4) * (memeWidth * 0.75 + 20);
+        finalTop = padding + (memeIndex - 4) * (memeWidth * 0.75 + 25);
 
     }
-    // TOP ROW (8–10)
+    // TOP ROW (8–10) → 180px
     else {
 
         memeWidth = 180;
         meme.style.width = memeWidth + "px";
+        meme.style.transform = "rotate(" + (Math.random() * 6 - 3) + "deg)";
 
         const topIndex = memeIndex - 8;
         const totalWidth = memeWidth * 3 + 30;
@@ -103,16 +107,18 @@ function spawnMeme() {
 
     }
 
-    // Random initial position
+    memeHeight = memeWidth * 0.75;
+
+    // Start at random
     const randomX = Math.random() * (window.innerWidth - memeWidth);
-    const randomY = Math.random() * (window.innerHeight - 200);
+    const randomY = Math.random() * (window.innerHeight - memeHeight);
 
     meme.style.left = `${randomX}px`;
     meme.style.top = `${randomY}px`;
 
     document.body.appendChild(meme);
 
-    // Animate to final position
+    // Animate to final slot
     setTimeout(() => {
         meme.style.left = `${finalLeft}px`;
         meme.style.top = `${finalTop}px`;
@@ -120,6 +126,7 @@ function spawnMeme() {
 
     memeIndex++;
 }
+
 
 
 
