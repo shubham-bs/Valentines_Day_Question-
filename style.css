@@ -152,7 +152,12 @@ display: inline-block;
     height: auto;
     z-index: 1;
     pointer-events: none;
-    transition: left 0.6s ease, top 0.6s ease;
+    transition: left 0.6s ease, top 0.6s ease, opacity 3.5s ease;
+    opacity: 1;
+}
+
+.fade-out {
+    opacity: 0;
 }
 
 
