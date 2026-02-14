@@ -119,6 +119,25 @@ noBtn.addEventListener("mouseenter", () => {
 
     moveSound.currentTime = 0;
     moveSound.play();
+
+    // Spawn meme when NO moves
+if (memeIndex < memes.length) {
+
+    const meme = document.createElement("img");
+    meme.src = memes[memeIndex];
+    meme.classList.add("floating-meme");
+
+    const x = Math.random() * (window.innerWidth - 250);
+    const y = Math.random() * (window.innerHeight - 300);
+
+    meme.style.left = `${x}px`;
+    meme.style.top = `${y}px`;
+
+    document.body.appendChild(meme);
+
+    memeIndex++;
+    }
+
     
     const letterRect = letterWindow.getBoundingClientRect();
     const btnRect = noBtn.getBoundingClientRect();
@@ -176,22 +195,7 @@ noBtn.addEventListener("mouseenter", () => {
          yesBtn.style.transform = `translate(-50%, -50%) scale(${yesScale})`;
      }
 
-     if (memeIndex < memes.length) {
-
-    const meme = document.createElement("img");
-    meme.src = memes[memeIndex];
-    meme.classList.add("floating-meme");
-
-    const x = Math.random() * (window.innerWidth - 250);
-    const y = Math.random() * (window.innerHeight - 300);
-
-    meme.style.left = `${x}px`;
-    meme.style.top = `${y}px`;
-
-    document.body.appendChild(meme);
-
-    memeIndex++;
-    }
+    
  
 });
 
